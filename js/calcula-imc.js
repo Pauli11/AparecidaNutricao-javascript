@@ -19,19 +19,20 @@ for(i=0; i < pacientes.length; i++) {
 
     var imcTd = paciente.querySelector(".info-imc");
 
-    var alturaEhValida = true;
-    var pesoEhValido = true;
+    var alturaEhValida = validaAltura(altura);
+    var pesoEhValido = validaPeso(peso);
 
-    if (peso <= 0 || peso >= 1000) {
-        //console.log("Peso inválido!");
+    if (!pesoEhValido) {  //comment 3//
+        console.log("peso não vale")
+        
         tdPeso.textContent = "Peso inválido!";
         pesoEhValido = false;
-       // paciente.style.backgroundColor="lightCoral"; >> é possivel manipular o DOM diretamente atraves do javascript, alterando seu estilo, porém não é uma boa prática, por ficar hard-coded//
+      
        paciente.classList.add("paciente-invalido");
-       //da forma como está na linha acima, estamos dialogando uma classe que foi adicionada no arquivo CSS,nesse ponto do código, e concentrando a mudança de estilo no próprio CSS
+       
     }
        
-    if (altura <= 0 || altura >= 3) {
+    if (!alturaEhValida) {
         //console.log("Altura inválida!");
         tdAltura.textContent = "Altura inválida!";
         alturaEhValida = false;
@@ -47,6 +48,22 @@ for(i=0; i < pacientes.length; i++) {
 
 }
 
+function validaPeso(peso){
+    if (peso>=0 && peso<1000){
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function validaAltura(altura){
+    if (altura>=1 && altura <=3.0){
+        return true;
+    } else {
+        return false;
+    }
+}
+
 function calculaImc(peso,altura){
     var imc = 0;
 
@@ -59,4 +76,4 @@ function calculaImc(peso,altura){
 
 //*1 //to fixed define o numero de casas decimais do calculo//
 // *2 // na refatoração do código, a propriedade toFixed foi passada para o retorno da função.
-
+// *3 // a exclamacao inverte o valor do que eh definido pela variavel. no caso, só vai entrar no if se o peso for inválido (oposto de "peso é valido") se chama operador NOT
